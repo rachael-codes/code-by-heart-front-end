@@ -1,12 +1,13 @@
 import React from "react";
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
+// import { useState } from "react";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 
 // import two main pages and header
 import Header from "./components/header/header.component";
 import LoginOrSignup from "./pages/login-or-signup/login-or-signup.component";
-// import flashcard page here
+import FlashcardPage from "./pages/flashcard-page/flashcard-page.component";
 
 class App extends React.Component {
   constructor() {
@@ -44,22 +45,33 @@ class App extends React.Component {
   }
 
   render() {
+    const SignInWrapper = ({ children, currentUser }) => {
+      return currentUser ? <Navigate to="/flashcards" replace /> : children;
+    };
+
     return (
       <div>
         <Header currentUser={this.state.currentUser} />
         <Routes>
-          <Route exact path="/login" element={<LoginOrSignup />} />
-          <Route path="/flashcards" element={<FlashcardPage />} />
-          <Route path="*" element={<NotFound />}></Route>
+          <Route
+            path="/"
+            element={
+              <SignInWrapper currentUser={this.state.currentUser}>
+                <LoginOrSignup />
+              </SignInWrapper>
+            }
+          />
+          <Route
+            path="/flashcards"
+            element={<FlashcardPage currentUser={this.state.currentUser} />}
+          />
         </Routes>
       </div>
     );
   }
 }
 
-export const FlashcardPage = () => {
-  return <div>This is the page where you practice with your flashcards.</div>;
-};
+
 export const NotFound = () => {
   return <div>This page could not be found.</div>;
 };
