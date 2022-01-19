@@ -79,7 +79,7 @@ class App extends React.Component {
 }
 
 // Note to self: can't figure out how to use hooks instead of classes here! Too confused!
-// Question: Should I change this over with the help of a teacher/TA?
+// Question: Should I convert this over with the help of a teacher/TA so I don't have 2 different styles in one project?
 // const App = () => {
 //   [currentUser, setCurrentUser] = useState(null);
 //   // let unsubscribeFromAuth = null;
