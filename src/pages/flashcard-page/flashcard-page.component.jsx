@@ -6,18 +6,24 @@ import axios from "axios";
 
 const FlashcardPage = ( {currentUser} ) => {
   const [isSignedIn, setIsSignedIn] = useState(true)
+  const [decksData, setDecksData] = useState([])
+  const [currentDeck, setCurrentDeck] = useState({
+    id: null,
+    owner_id: "",
+    name: "",
+  });
 
   useEffect(() => {
-    function connectToDB () {
+    function loadDecks () {
       const userData = {
           uid: currentUser.id,
           displayName: currentUser.displayName,
           email: currentUser.email
       }
       axios
-      .post("http://127.0.0.1:5000/verify_client", userData)
+      .post("http://127.0.0.1:5000/load_decks", userData)
       .then((response) => {
-          console.log(response);
+          setDecksData(response.data);
       })
       .catch((error) => {
           console.log("there was an error", error);
@@ -27,22 +33,28 @@ const FlashcardPage = ( {currentUser} ) => {
     if (!currentUser) {
       setIsSignedIn(false)
     } else {
-      connectToDB()
+      loadDecks()
     }
   }, [currentUser]);
+
+  const updateCurrentDeck = (deck) => {
+    setCurrentDeck(deck);
+    console.log("Current deck:", currentDeck);
+  };
 
   // if currentUser logs out, navigate back home 
   if (!isSignedIn) {
     return <Navigate to="/" replace />
   }
 
-  // load decks Data
-  const decksData = {}
-
   // else, render the page 
   return (
     <>
-      <DecksList decksData={decksData} />
+      <section className="decks-list-container">
+        <DecksList 
+        decksData={decksData}
+        updateCurrentDeck={updateCurrentDeck} />
+      </section>
     </>
   );
 };
