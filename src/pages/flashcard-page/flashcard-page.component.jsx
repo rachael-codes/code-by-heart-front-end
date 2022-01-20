@@ -1,11 +1,11 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+// import { Navigate } from 'react-router-dom';
 import DecksList from '../../components/decks-list/decks-list.component.jsx'
 import axios from "axios";
+import './flashcard-page.styles.scss'
 
 const FlashcardPage = ( {currentUser} ) => {
-  const [isSignedIn, setIsSignedIn] = useState(true)
   const [decksData, setDecksData] = useState([])
   const [currentDeck, setCurrentDeck] = useState({
     id: null,
@@ -31,7 +31,8 @@ const FlashcardPage = ( {currentUser} ) => {
     }
 
     if (!currentUser) {
-      setIsSignedIn(false)
+      console.log('user signed out')
+      // setIsSignedIn(false)
     } else {
       loadDecks()
     }
@@ -43,19 +44,18 @@ const FlashcardPage = ( {currentUser} ) => {
   };
 
   // if currentUser logs out, navigate back home 
-  if (!isSignedIn) {
-    return <Navigate to="/" replace />
-  }
+  // if (!isSignedIn) {
+  //   return <Navigate to="/" replace />
+  // }
 
-  // else, render the page 
   return (
-    <>
+    <div className="main-container">
       <section className="decks-list-container">
         <DecksList 
         decksData={decksData}
         updateCurrentDeck={updateCurrentDeck} />
       </section>
-    </>
+    </div>
   );
 };
 

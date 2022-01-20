@@ -1,0 +1,37 @@
+.main-container {
+  display: grid;
+  grid-gap: 3px;
+  height: 100vh;
+  grid-template-columns: repeat(15, 1fr);
+  grid-template-areas: 
+      "m m m c c c c c c e e e e e e";
+}
+
+.decks-list-container {
+  background-color: beige;
+  width: 220px;
+  grid-area: m;
+}
+
+.flashcard-area-container {
+  background-color: rgb(185, 85, 185);
+  grid-area: c;
+}
+
+.ide-area-container {
+  background-color: rgb(243, 141, 141);
+  grid-area: e;
+}
+
+button {
+  border: 1px solid var(--focus-purple);
+  border-radius: 1rem;
+  color: var(--focus-purple);
+  cursor: pointer;
+  display: inline-block;
+  height: 2rem;
+  line-height: calc(2rem - 2px);
+  margin: 0;
+  outline: none;
+  padding: 0 1rem;
+}

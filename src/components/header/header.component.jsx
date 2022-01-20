@@ -1,29 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { auth } from '../../firebase/firebase.utils'
+import { auth, signInWithGoogle } from '../../firebase/firebase.utils'
 import { ReactComponent as Logo } from '../../assets/heart-logo.svg'
+import CustomButton from '../custom-button/custom-button.component';
+
 import './header.styles.scss'
 
 const Header = ( { currentUser }) => (
   <div className='header'>
-    <Link className='logo-container' to='/'>
+    <div className='logo-container'>
       <Logo className='logo' />
-    </Link>
+    </div>
     <div className='options'>
-      <Link className='option' to='/flashcards'>
-        FLASHCARDS
-      </Link>
-      <Link className='option' to='/contact-page'>
-        CONTACT
-      </Link>
       {currentUser ? (
-        <div className='option' onClick={() => auth.signOut()}>
-          SIGN OUT
-        </div>
+        <CustomButton  onClick={() => auth.signOut()}>
+          Sign out
+        </CustomButton>
       ) : (
-        <Link className='option' to='/'>
-          SIGN IN
-        </Link>
+        <CustomButton 
+          onClick={signInWithGoogle}> 
+            Sign in
+        </CustomButton>
       )}
     </div>
   </div>

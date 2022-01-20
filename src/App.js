@@ -1,16 +1,12 @@
 import React from "react";
 import "./App.css";
 import { Route, Routes, Navigate } from "react-router-dom";
-// import { useEffect, useState } from "react";
-import {
-  auth,
-  createUserProfileDocument,
-  signInWithGoogle,
-} from "./firebase/firebase.utils";
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 
 import Header from "./components/header/header.component";
-import LoginOrSignup from "./pages/login-or-signup/login-or-signup.component";
+import LandingPage from "./pages/landing-page/landing-page.component";
 import FlashcardPage from "./pages/flashcard-page/flashcard-page.component";
+import NotFoundPage from "./pages/not-found-page/not-found-page.component";
 
 class App extends React.Component {
   constructor() {
@@ -52,7 +48,11 @@ class App extends React.Component {
       return currentUser ? <Navigate to="/flashcards" replace /> : children;
     };
 
-    // Note to self - ADD THE "PAGE NOT FOUND" ROUTE IN
+    const SignOutWrapper = ({ children, currentUser }) => {
+      return currentUser ? children : <Navigate to="/" replace />;
+    };
+
+    // Note to self - CONSIDER ADDING A "PAGE NOT FOUND" ROUTE
     return (
       <div>
         <Header currentUser={this.state.currentUser} />
@@ -61,17 +61,19 @@ class App extends React.Component {
             path="/"
             element={
               <SignInWrapper currentUser={this.state.currentUser}>
-                <LoginOrSignup
-                  // emailSignInStart={emailSignInStart}
-                  signInWithGoogle={signInWithGoogle}
-                />
+                <LandingPage />
               </SignInWrapper>
             }
           />
           <Route
             path="/flashcards"
-            element={<FlashcardPage currentUser={this.state.currentUser} />}
+            element={
+              <SignOutWrapper currentUser={this.state.currentUser}>
+                <FlashcardPage currentUser={this.state.currentUser} />
+              </SignOutWrapper>
+            }
           />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
     );
@@ -110,9 +112,5 @@ class App extends React.Component {
 // }
 // }, [])
 // }
-
-export const NotFound = () => {
-  return <div>This page could not be found.</div>;
-};
 
 export default App;

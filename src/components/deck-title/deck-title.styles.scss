@@ -1,34 +1,29 @@
 .deck-titles {
-  padding: 5px;
-  font-size: x-large;
-  color: green;
+  padding: 2px;
+  font-family: 'Roboto Slab', serif;
 
-  // .button {
-  //   min-width: 165px;
-  //   width: auto;
-  //   height: 50px;
-  //   letter-spacing: 0.5px;
-  //   line-height: 50px;
-  //   padding: 0 35px 0 35px;
-  //   font-size: 15px;
-  //   background-color: black;
-  //   color: white;
-  //   text-transform: uppercase;
-  //   font-family: 'Open Sans Condensed';
-  //   font-size: small;
-  //   font-weight: bolder;
-  //   border: none;
-  //   cursor: pointer;
+  button {
+    min-width: 165px;
+    width: 200px;
+    height: 40px;
+    letter-spacing: 0.5px;
+    line-height: 40px;
+    padding: 0 5px 0 5px;
+    background-color: white;
+    color: black;
+    text-transform: uppercase;
+    font-family: 'Roboto Slab', serif;
+    font-size: small;
+    border: 1px solid black;
+    cursor: pointer;
   
-  //   &:hover {
-  //     background-color: white;
-  //     color: black;
-  //     border: 1px solid black;
-  //   }
-  // }
+    &:hover {
+      background-color: black;
+      color: white;
+    }
+  }
 }
 
-.button {
-  min-width: 165px;
-  color: green;
-}
+// .button {
+//   min-width: 165px;
+// }
