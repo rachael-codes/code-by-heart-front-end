@@ -11,6 +11,8 @@
   background-color: beige;
   width: 220px;
   grid-area: m;
+  display: flex;
+  flex-direction: column;
 }
 
 .flashcard-area-container {
@@ -33,5 +35,5 @@ button {
   line-height: calc(2rem - 2px);
   margin: 0;
   outline: none;
-  padding: 0 1rem;
+  padding: 0;
 }

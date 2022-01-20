@@ -1,15 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
-
 import CodeMirror from "@uiw/react-codemirror"
 import 'codemirror/theme/twilight.css'
 // Note: more themes here -- https://codemirror.net/demo/theme.htm
 
 import './code-editor.styles.scss'
-
 import CustomButton from '../custom-button/custom-button.component'
 
-import { useState } from 'react';
 
 const CodeEditor = () => {
   const [codeToRun, setCodeToRun] = useState(null)
