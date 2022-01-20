@@ -13,15 +13,19 @@ import { useState } from 'react';
 
 const CodeEditor = () => {
   const [codeToRun, setCodeToRun] = useState(null)
+  const [codeInOutputContainer, setCodeInOutputContainer] = useState(null)
 
-  let code = "for i in range(4): print('apple')"; // this will change later!
-
-  // func that will run the Jdoodle code compiler in the backend
+  // func that will call the Jdoodle code compiler func in the backend
+  // and then display the code that gets run in the output container
   const runCode = () => {
     axios
-      .post(`http://127.0.0.1:5000/compile`, {"code" : code})
+      .post(`http://127.0.0.1:5000/compile`, {"code" : codeToRun})
       .then((response) => {
           console.log(response.data)
+          // if ("jdoodle.py") {
+
+          // }
+          setCodeInOutputContainer(response.data)
       })
       .catch((error) => {
           console.log("there was an error:", error);
@@ -45,11 +49,12 @@ const CodeEditor = () => {
         width="380px"
         onChange={(editor) => {
           console.log('value:', editor.getValue());
+          setCodeToRun(editor.getValue())
         }}/>
 
         <div className='output-container'>
           <div className='output-text'>
-            {codeToRun}
+            {codeInOutputContainer}
           </div>
         </div>
     </div>
