@@ -21,11 +21,13 @@ const CodeEditor = () => {
     axios
       .post(`http://127.0.0.1:5000/compile`, {"code" : codeToRun})
       .then((response) => {
-          console.log(response.data)
-          // if ("jdoodle.py") {
-
-          // }
-          setCodeInOutputContainer(response.data)
+          const output = response.data
+          if (response.data.includes("jdoodle.py")) { // error occurred
+            const shorterErrorMsg = output.substring(output.indexOf('E'));
+            setCodeInOutputContainer(shorterErrorMsg)
+          } else {
+            setCodeInOutputContainer(output)
+          }
       })
       .catch((error) => {
           console.log("there was an error:", error);
