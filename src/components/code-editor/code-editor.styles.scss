@@ -1,0 +1,13 @@
+.output-container {
+  display: flex;
+  align-items: center;
+  width: 380px;
+  height: 50px;
+  border: 2px;
+  background-color: beige;
+
+  .output-text {
+    margin: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+  }
+}

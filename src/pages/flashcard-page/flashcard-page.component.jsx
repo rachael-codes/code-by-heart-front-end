@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 // import { Navigate } from 'react-router-dom';
+import CodeEditor from '../../components/code-editor/code-editor.component.jsx'
 import DecksList from '../../components/decks-list/decks-list.component.jsx'
 import axios from "axios";
 import './flashcard-page.styles.scss'
@@ -54,6 +55,10 @@ const FlashcardPage = ( {currentUser} ) => {
         <DecksList 
         decksData={decksData}
         updateCurrentDeck={updateCurrentDeck} />
+      </section>
+
+      <section className="ide-area-container">
+        <CodeEditor />
       </section>
     </div>
   );
