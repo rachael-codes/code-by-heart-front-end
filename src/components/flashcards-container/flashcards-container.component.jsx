@@ -9,6 +9,8 @@ import { useState, useEffect } from "react";
 
 const FlashcardsContainer = ( { currentDeck, deleteDeck }) => {
   const [flashcardsData, setFlashcardsData] = useState([]);
+  const [currentCard, setCurrentCard] = useState(null);
+  const [revealCardAnswer, SetRevealCardAnswer] = useState(false)
 
   useEffect(() => {
     axios
@@ -17,17 +19,23 @@ const FlashcardsContainer = ( { currentDeck, deleteDeck }) => {
       )
       .then((response) => {
         setFlashcardsData(response.data);
+        if (response.data.length > 0) {
+          setCurrentCard(response.data[0])
+        } else {
+          setCurrentCard(null)
+        }
       })
       .catch((error) => {
         console.log(error);
       });
       console.log("current deck id:", currentDeck.id)
+      console.log("current card:", currentCard)
       console.log("flashcards data:", flashcardsData)
   }, [currentDeck]);
 
   const deleteFlashcard = (deletedCard) => {
     axios
-      .delete(`${process.env.REACT_APP_BACKEND_URL}/cards/${deletedCard.id}`)
+      .delete(`flashcards/${deletedCard.id}`)
       .then((response) => {
         // console.log(response);
         const updatedCardsData = flashcardsData.filter(
@@ -37,25 +45,8 @@ const FlashcardsContainer = ( { currentDeck, deleteDeck }) => {
       })
       .catch((error) => {
         console.log(error);
-        // Improve error handling
       });
   };
-
-  const FlashcardList = flashcardsData.map((flashcard) => {
-    return (
-      <div className="flashcard-front-and-back">
-        <FlashcardFront
-          key={flashcard.id}
-          front={flashcard.front}
-          deleteFlashcard={deleteFlashcard}
-        />
-        <FlashcardBack
-          key={flashcard.id}
-          back={flashcard.back}
-        />
-      </div>
-    );
-  });
 
   const createNewFlashcard = (newCardData) => {
     // newCardData shape -> { "front": flashcardFront, "back": flashcardBack }
@@ -66,6 +57,7 @@ const FlashcardsContainer = ( { currentDeck, deleteDeck }) => {
         const flashcards = [...flashcardsData];
         flashcards.push(response.data);
         setFlashcardsData(flashcards);
+        setCurrentCard(newCardData)
       })
       .catch((error) => {
         console.log("Error:", error);
@@ -82,7 +74,20 @@ const FlashcardsContainer = ( { currentDeck, deleteDeck }) => {
       <div className="new-card-submission-container">
         <NewFlashcard createNewFlashcard={createNewFlashcard} />
       </div>
-      <section className="cards-container">{FlashcardList}</section>
+      <section className="flashcard">
+        {currentCard && 
+          <FlashcardFront 
+            front={currentCard.front}
+            deleteFlashcard={deleteFlashcard}>
+          </FlashcardFront>
+        }
+        {currentCard && 
+          <FlashcardBack
+            back={currentCard.back} revealAnswer={revealCardAnswer}>
+          </FlashcardBack>
+        }
+
+      </section>
     </div>
   );
 };
