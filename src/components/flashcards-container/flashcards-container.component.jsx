@@ -2,10 +2,11 @@ import PropTypes from "prop-types";
 import "./flashcards-container.styles.scss";
 import Flashcard from "../flashcard/flashcard.component.jsx";
 import NewFlashcard from "../new-flashcard/new-flashcard.component.jsx";
+import CustomButton from '../custom-button/custom-button.component';
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-const FlashcardsContainer = ( { currentDeck }) => {
+const FlashcardsContainer = ( { currentDeck, deleteDeck }) => {
   const [flashcardsData, setFlashcardsData] = useState([]);
 
   useEffect(() => {
@@ -68,6 +69,7 @@ const FlashcardsContainer = ( { currentDeck }) => {
     <div className="deck-wrapper">
       <div className="deck-header">
         <h2 className="current-deck-title">{currentDeck.name}</h2>
+        <CustomButton onClick={deleteDeck}>Delete Deck</CustomButton>
       </div>
       <div className="new-card-submission-container">
         <NewFlashcard createNewFlashcard={createNewFlashcard} />

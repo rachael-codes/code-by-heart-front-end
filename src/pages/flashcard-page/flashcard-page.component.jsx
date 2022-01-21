@@ -58,10 +58,25 @@ const FlashcardPage = ( {currentUser} ) => {
     console.log("Current deck:", currentDeck);
   };
 
-  // if currentUser logs out, navigate back home 
-  // if (!isSignedIn) {
-  //   return <Navigate to="/" replace />
-  // }
+  const deleteDeck = () => {
+    axios
+      .delete(`http://127.0.0.1:5000/decks/${currentDeck.id}`)
+      .then((response) => {
+        console.log(response);
+        const updatedDecksData = decksData.filter(
+          (deck) => deck.id !== currentDeck.id
+        );
+        setDecksData(updatedDecksData);
+        setCurrentDeck({
+          id: null,
+          owner_id: "",
+          name: "",
+        })
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div className="main-container">
@@ -74,7 +89,11 @@ const FlashcardPage = ( {currentUser} ) => {
       </section>
 
       <section className="flashcard-area-container">
-        <FlashcardsContainer currentDeck={currentDeck} />
+        {currentDeck.id ? (
+          <FlashcardsContainer currentDeck={currentDeck} deleteDeck={deleteDeck} />
+        ) : (
+          <div>Select a deck</div>
+        )}
       </section>
 
       <section className="ide-area-container">

@@ -16,9 +16,8 @@ const Header = ( { currentUser }) => (
           Sign out
         </CustomButton>
       ) : (
-        <CustomButton 
-          onClick={signInWithGoogle}> 
-            Sign in
+        <CustomButton onClick={signInWithGoogle}> 
+          Sign in
         </CustomButton>
       )}
     </div>
