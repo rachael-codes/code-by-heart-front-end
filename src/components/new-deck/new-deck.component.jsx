@@ -5,13 +5,12 @@ import './new-deck.styles.scss';
 const NewDeck = ( { createNewDeck } ) => {
   const [formFields, setFormFields] = useState({ name: "" });
 
-  // this prevents user from adding a deck with no name to decks
+  // this prevents user from adding a deck with no name to decks 
   const newDeckIsEnabled = formFields.name.length > 0;
 
   const onNameChange = (event) => {
     setFormFields({
-      ...formFields, // think this isn't necessary since there's only 1 thing in form?
-      name: event.target.value,
+      name: event.target.value
     });
   };
 
@@ -32,6 +31,7 @@ const NewDeck = ( { createNewDeck } ) => {
       <input
         className="name-box"
         type="text"
+        maxLength={20}
         placeholder="type here"
         value={formFields.name}
         onChange={onNameChange}

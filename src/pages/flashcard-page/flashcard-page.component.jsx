@@ -66,12 +66,12 @@ const FlashcardPage = ( {currentUser} ) => {
         const updatedDecksData = decksData.filter(
           (deck) => deck.id !== currentDeck.id
         );
-        setDecksData(updatedDecksData);
         setCurrentDeck({
           id: null,
           owner_id: "",
           name: "",
         })
+        setDecksData(updatedDecksData);
       })
       .catch((error) => {
         console.log(error);

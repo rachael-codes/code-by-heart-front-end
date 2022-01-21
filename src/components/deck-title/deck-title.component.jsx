@@ -2,19 +2,19 @@ import PropTypes from "prop-types";
 import React from 'react';
 import './deck-title.styles.scss'
 
-const DeckTitle = (props) => {
+const DeckTitle = ({ updateCurrentDeck, deckData }) => {
   const selectCurrentDeck = () => {
     const newCurrentDeck = {
-      id: props.deckData.id,
-      name: props.deckData.name,
-      owner_id: props.deckData.owner_id
+      id: deckData.id,
+      name: deckData.name,
+      owner_id: deckData.owner_id
     };
-    props.updateCurrentDeck(newCurrentDeck);
+    updateCurrentDeck(newCurrentDeck);
   };
 
   return (
     <section className='deck-titles'>
-      <button onClick={selectCurrentDeck}>{props.deckData.name}</button>
+      <button onClick={selectCurrentDeck}>{deckData.name}</button>
     </section>
   );
 };

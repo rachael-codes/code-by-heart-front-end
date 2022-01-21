@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import "./flashcards-container.styles.scss";
-import Flashcard from "../flashcard/flashcard.component.jsx";
+import FlashcardFront from "../flashcard-front/flashcard-front.component.jsx";
+import FlashcardBack from "../flashcard-back/flashcard-back.component.jsx";
 import NewFlashcard from "../new-flashcard/new-flashcard.component.jsx";
 import CustomButton from '../custom-button/custom-button.component';
 import axios from "axios";
@@ -16,11 +17,12 @@ const FlashcardsContainer = ( { currentDeck, deleteDeck }) => {
       )
       .then((response) => {
         setFlashcardsData(response.data);
-        console.log(flashcardsData);
       })
       .catch((error) => {
         console.log(error);
       });
+      console.log("current deck id:", currentDeck.id)
+      console.log("flashcards data:", flashcardsData)
   }, [currentDeck]);
 
   const deleteFlashcard = (deletedCard) => {
@@ -41,11 +43,17 @@ const FlashcardsContainer = ( { currentDeck, deleteDeck }) => {
 
   const FlashcardList = flashcardsData.map((flashcard) => {
     return (
-      <Flashcard
-        key={flashcard.id}
-        cardData={flashcard}
-        deleteFlashcard={deleteFlashcard}
-      />
+      <div className="flashcard-front-and-back">
+        <FlashcardFront
+          key={flashcard.id}
+          front={flashcard.front}
+          deleteFlashcard={deleteFlashcard}
+        />
+        <FlashcardBack
+          key={flashcard.id}
+          back={flashcard.back}
+        />
+      </div>
     );
   });
 
@@ -74,7 +82,7 @@ const FlashcardsContainer = ( { currentDeck, deleteDeck }) => {
       <div className="new-card-submission-container">
         <NewFlashcard createNewFlashcard={createNewFlashcard} />
       </div>
-      {/* <section className="cards-container">{FlashcardList}</section> */}
+      <section className="cards-container">{FlashcardList}</section>
     </div>
   );
 };
