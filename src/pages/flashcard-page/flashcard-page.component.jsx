@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import CodeEditor from '../../components/code-editor/code-editor.component.jsx'
 import DecksList from '../../components/decks-list/decks-list.component.jsx'
 import NewDeck from '../../components/new-deck/new-deck.component.jsx'
+import FlashcardsContainer from '../../components/flashcards-container/flashcards-container.component.jsx'
+
 import axios from "axios";
 import './flashcard-page.styles.scss'
 
@@ -31,13 +33,7 @@ const FlashcardPage = ( {currentUser} ) => {
           console.log("there was an error", error);
       });
     }
-
-    if (!currentUser) {
-      console.log('user signed out')
-      // setIsSignedIn(false)
-    } else {
-      loadDecks()
-    }
+    loadDecks()
   }, [currentUser]);
 
   const createNewDeck = (newDeck) => {
@@ -69,13 +65,16 @@ const FlashcardPage = ( {currentUser} ) => {
 
   return (
     <div className="main-container">
-
       <section className="decks-list-container">
         <DecksList 
           decksData={decksData}
           updateCurrentDeck={updateCurrentDeck}
         />
-        <NewDeck createNewDeck={createNewDeck}></NewDeck>
+        <NewDeck createNewDeck={createNewDeck} />
+      </section>
+
+      <section className="flashcard-area-container">
+        <FlashcardsContainer currentDeck={currentDeck} />
       </section>
 
       <section className="ide-area-container">

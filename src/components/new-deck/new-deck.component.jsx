@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
-import CustomButton from '../custom-button/custom-button.component';
 import PropTypes from "prop-types";
 import './new-deck.styles.scss';
 
-
-// NOTE - IN ORDER TO MAKE THIS WORK, YOU MUST DEFINE A 
-// CREATENEWBOARD FUNC IN THE flashcard PAGE + PASS IT INTO THIS 
-// COMPONENT AS A PROP 
-// IT SHOULD CALL THE `CREATE NEW DECK` POST ROUTE IN BACKEND!
-// SEE: https://github.com/sphillips11/front-end-inspiration-board/blob/main/src/App.js
-
 const NewDeck = ( { createNewDeck } ) => {
   const [formFields, setFormFields] = useState({ name: "" });
+
+  // this prevents user from adding a deck with no name to decks
   const newDeckIsEnabled = formFields.name.length > 0;
 
   const onNameChange = (event) => {
